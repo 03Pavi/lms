@@ -8,6 +8,7 @@ router.get("/", (req, res, next) => {
 });
 
 router.use('/teachers', require('./teacher.routes'));
+router.use('/leave', require('./leave.route'));
 router.use('/sessions', require('./session.routes'));
 router.use('/academic-groups', require('./academic_group.routes'));
 router.put("/set-cors", cloud_storage_controller.set_cors);
