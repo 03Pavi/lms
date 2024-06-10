@@ -114,6 +114,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'leave_policy',
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
   });
   return {leave_policy, leave_period_enum};
 };
