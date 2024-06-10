@@ -1,0 +1,85 @@
+version: '3.9'
+
+services:
+  # postgres DB service
+  postgres_db:
+    image: postgres:16.1-alpine3.18
+    container_name: test_pgdb
+    restart: always
+    env_file:
+      - ./.env.dev
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    networks:
+      - attendance_control
+
+  #pgAdmin
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin4_container
+    restart: always
+    ports:
+      - "8888:80"
+    env_file:
+      - ./.env.dev
+
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    networks:
+      - attendance_control
+
+  # RabbitMQ service
+  rabbitmq:
+    container_name: message_broker
+    image: 'rabbitmq:3.8-management-alpine'
+    restart: always
+    ports:
+      # HTTP management UI
+      - 15673:15672
+      # AMQP protocol port
+      - 5672:5672
+    volumes:
+        - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+        - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+    networks:
+      - attendance_control
+
+  # Backend service
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
+    volumes:
+      - .:/app
+      - /app/node_modules
+    networks:
+      - attendance_control
+    env_file:
+      - ./.env.dev
+    depends_on:
+      - postgres_db
+      - pgadmin
+      - rabbitmq
+    links:
+      - rabbitmq
+    restart: on-failure
+    command: >
+     sh -c "cp ./startup.sh /tmp/ &&
+             sed -i 's/\\r\$//' /tmp/startup.sh &&
+             chmod +x /tmp/startup.sh &&
+             /tmp/startup.sh &&
+             npm run up &&
+             npm run seed &&
+             npm start"
+networks:
+  attendance_control:
+    driver: bridge
+
+volumes:
+  pg_data: {}
+  pgadmin_data: {}
+  rabbitmq: {}

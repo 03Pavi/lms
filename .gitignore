@@ -1,0 +1,6 @@
+node_modules
+.env
+.vscode
+coverage
+.scannerwork
+etc/secrets
