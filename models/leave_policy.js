@@ -21,16 +21,16 @@ module.exports = (sequelize, DataTypes) => {
 
     static associate(models) {
 
-      this.attendance_justification_association = leave_policy.hasOne(models.leave, {
+      this.leavy_policy_leave_association = leave_policy.hasOne(models.leave, {
         foreignKey: "leave_id",
         as: "leave", 
       });
 
-        this.group_student_association = applicability.belongsToMany(models.leavy_policy, {
+        this.leave_policy_applicability_association = leave_policy.belongsToMany(models.applicability, {
           through: models.policy_applicability,
-          foreignKey: "applicability_id",
-          otherKey: "leavy_policy_id",
-          as: "leavy_policy", // alias for the association
+          foreignKey: "leavy_policy_id",
+          otherKey: "applicability_id",
+          as: "applicabilities", // alias for the association
         });
 
     }
