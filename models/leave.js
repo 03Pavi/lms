@@ -28,7 +28,12 @@ module.exports = (sequelize, DataTypes) => {
 
   class leave extends Model {
     static associate(models) {
-      // define association here
+
+      this.attendance_justification_association = leave.belongsTo(models.leave_policy, {
+        foreignKey: "leave_id",
+        as: "leave", // alias for the association
+      });
+
     }
   }
   leave.init({
@@ -56,19 +61,6 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'organisation id cannot be empty.',
         },
       },
-    },
-    leave_policy_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'leave_policies',
-        key: 'id',
-      },
-      validate: {
-        notNull: {
-          msg: 'Leave policy id is required.'
-        },
-      }
     },
     name: {
       type: DataTypes.STRING(100),

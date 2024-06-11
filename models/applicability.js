@@ -10,7 +10,12 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      this.group_student_association = leavy_policy.belongsToMany(models.leavy_policy, {
+        through: models.policy_applicability,
+        foreignKey: "leavy_policy_id",
+        otherKey: "applicability_id",
+        as: "applicability", // alias for the association
+      });
     }
   }
   applicability.init({
