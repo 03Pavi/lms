@@ -1,57 +1,42 @@
-const {z, optional} = require('zod');
-
-const leave_period_enum = {
-    YEARLY: 'yearly',
-    MONTHLY: 'monthly',
-};
-
-const leave_type_enum = {
-    PAID : 'paid',
-    UNPAID: 'unpaid',
-}
-
-const leave_unit_enum = {
-    HOUR : 'hour',
-    DAY: 'day',
-}
-
-const leave_schema = {
-    name: z.string({required_error: "Name is required"}),
-    organisation_id: z.string({required_error: "Organisation id is required"}).uuid(),
-    color: z.string().max(8, { message: "Color must be 8 or fewer characters long" }),
-    code: z.string().max(3, { message: "Code must be 3 or fewer characters long" }).optional(),
-    type: z.enum([leave_type_enum.PAID, leave_type_enum.UNPAID]).optional(),
-    unit: z.enum([leave_unit_enum.HOUR, leave_unit_enum.DAY]).optional(),
-    is_active: z.boolean().optional().default(true),
-}
-
-const leave_policy_schema = {
-    credit: z.number().int().optional(),
-    credit_period: z.enum([leave_period_enum.YEARLY, leave_period_enum.MONTHLY]).optional(),
-    reset: z.boolean().optional().default(false),
-    reset_period: z.enum([leave_period_enum.YEARLY, leave_period_enum.MONTHLY]).optional(),
-    carry: z.boolean().optional().default(false),
-    carry_leaves: z.number().int().optional(),
-    encash: z.boolean().optional().default(false),
-    encash_leaves: z.number().int().optional(),
-    description: z.string().optional().refine((val) => val === undefined || val.trim() !== '', { message: 'Description cannot be empty.' }),
-    valid_from: z.string({ required_error: "valid_from field is required." }).datetime({ message: "Invalid \'valid_from\' datetime string! Must be UTC." }),
-    valid_to: z.string().date({ message: "Invalid \'valid_to\' datetime string! Must be UTC." }).optional(),
-};
-
-const create_leave_schema = z.object({
-    leave: z.object(leave_schema),
-    leave_policy: z.object(leave_policy_schema)
-})
+const { leave_policy_schema, leave_schema } = require("../lib/schema");
+const { 
+    leave_repository_obj,
+    leave_policy_repository_obj,
+    applicability_repository_obj,
+    restriction_repository_obj
+} = require("../repositories");
 
 exports.create_leave_policy = async (payload) => {
 
-    const leave_data = create_leave_schema.parse(payload.body);
+    let { leave = {}, leave_policy = {}, applicabilities = [], restriction = {} } = payload.body;
+    
+    leave = leave_schema.parse(leave);
+    leave_policy = leave_policy_schema.parse(leave_policy);
+
+    const transaction = await transaction_repository_obj.start_transaction();
 
     try {
+        const created_leave = await leave_repository_obj.create_leave({leave, transaction});
+        const leave_id = created_leave.id;
+
+        const created_leave_policy = await leave_policy_repository_obj.create_leave_policy({leave_policy: {...leave_policy,leave_id}, transaction});
+        const leave_policy_id = created_leave_policy.id;
+
+        const created_restriction = await restriction_repository_obj.create_leave_restriction({...restriction,leave_policy_id})
+
+        const created_applicabilities = await applicability_repository_obj.create_leave_applicabilities({applicabilities, transaction});
         
-        return {leave_policy_data};
+        await created_leave_policy.addApplicabilities(created_applicabilities, { transaction });
+
+        await transaction_repository_obj.commit_transaction(transaction);
+        return { 
+            leave_data: created_leave,
+            leave_policy: created_leave_policy,
+            applicability: created_applicabilities,
+            restriction: created_restriction
+        };
     } catch (error) {
+        await transaction_repository_obj.rollback_transaction(transaction);
         throw error;
     }
 }

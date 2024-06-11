@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-
+  
   class leave_type_enum  {
     static leave_type = {
       PAID : 'paid',
@@ -27,9 +27,12 @@ module.exports = (sequelize, DataTypes) => {
   }
 
   class leave extends Model {
+
+    static leave_leave_policy_association;
+
     static associate(models) {
 
-      this.attendance_justification_association = leave.belongsTo(models.leave_policy, {
+      this.leave_leave_policy_association = leave.belongsTo(models.leave_policy, {
         foreignKey: "leave_id",
         as: "leave", // alias for the association
       });

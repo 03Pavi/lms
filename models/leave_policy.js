@@ -21,17 +21,17 @@ module.exports = (sequelize, DataTypes) => {
 
     static associate(models) {
 
-      this.leavy_policy_leave_association = leave_policy.hasOne(models.leave, {
+      this.leave_policy_leave_association = leave_policy.hasOne(models.leave, {
         foreignKey: "leave_id",
         as: "leave", 
       });
 
-        this.leave_policy_applicability_association = leave_policy.belongsToMany(models.applicability, {
-          through: models.policy_applicability,
-          foreignKey: "leavy_policy_id",
-          otherKey: "applicability_id",
-          as: "applicabilities", // alias for the association
-        });
+      this.leave_policy_applicability_association = leave_policy.belongsToMany(models.applicability, {
+        through: models.policy_applicability,
+        foreignKey: "leave_policy_id",
+        otherKey: "applicability_id",
+        as: "applicabilities", // alias for the association
+      });
 
     }
   }
@@ -72,7 +72,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'leave',
+        model: 'leaves',
         key: 'id',
       },
       validate: {

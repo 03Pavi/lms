@@ -1,4 +1,10 @@
+const { restriction_repository_obj } = 
+
 module.exports = {
+    leave_repository_obj: require('./leave.repositories').leave_repository_obj,
+    leave_policy_repository_obj: require('./leave_policy.repositories').leave_policy_repository_obj,
+    applicability_repository_obj: require('./applicability.repositories').applicability_repository_obj,
+    restriction_repository_obj: require('./restriction.repositories').restriction_repository_obj,
     teacher_repository_obj: require('./teacher.repositories').teacher_repository_obj,
     session_repository_obj: require('./session.repositories').session_repository_obj,
     student_repository_obj: require('./student.repositories').student_repository_obj,
