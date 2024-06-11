@@ -20,7 +20,19 @@ module.exports = (sequelize, DataTypes) => {
   class leave_policy extends Model {
 
     static associate(models) {
-      
+
+      this.leavy_policy_leave_association = leave_policy.hasOne(models.leave, {
+        foreignKey: "leave_id",
+        as: "leave", 
+      });
+
+        this.leave_policy_applicability_association = leave_policy.belongsToMany(models.applicability, {
+          through: models.policy_applicability,
+          foreignKey: "leavy_policy_id",
+          otherKey: "applicability_id",
+          as: "applicabilities", // alias for the association
+        });
+
     }
   }
   leave_policy.init({
@@ -55,6 +67,19 @@ module.exports = (sequelize, DataTypes) => {
     },
     credit: {
       type: DataTypes.INTEGER,
+    },
+    leave_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'leave',
+        key: 'id',
+      },
+      validate: {
+        notNull: {
+          msg: 'Leave id is required.'
+        },
+      }
     },
     credit_period: {
       type: DataTypes.ENUM(leave_period_enum.get_available_periods()),
