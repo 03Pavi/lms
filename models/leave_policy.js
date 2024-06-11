@@ -95,6 +95,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     encash: {
       type: DataTypes.BOOLEAN,
+      defaultValue: false
     },
     encash_leaves: {
       type: DataTypes.INTEGER,
@@ -109,6 +110,24 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       notEmpty: {
         msg: 'Description cannot be empty.',
+      },
+    },
+    valid_from: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      validate: {
+        isDate: {
+          msg: 'Invalid valid_from value.'
+        },
+      },
+    },
+    valid_to: {
+      type: DataTypes.DATE,
+      allowNull: true,
+      validate: {
+        isDate: {
+          msg: 'Invalid valid_to value.'
+        },
       },
     }
   }, {
