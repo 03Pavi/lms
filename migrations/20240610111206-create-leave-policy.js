@@ -16,10 +16,13 @@ module.exports = {
         allowNull: false,
         unique: true,
       },
-      name: {
-        type: Sequelize.STRING,
+      leave_id: {
         allowNull: false,
-        unique: true,
+        type: Sequelize.INTEGER,
+        references: {
+          model: "leaves",
+          key: 'id'
+        }
       },
       credit: {
         type: Sequelize.INTEGER,
@@ -54,8 +57,16 @@ module.exports = {
         allowNull: true,
       },
       description: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(500),
         allowNull: true,
+      },
+      valid_from: {
+        type: Sequelize.DATE,
+        allowNull: false
+      },
+      valid_to: {
+        type: Sequelize.DATE,
+        allowNull: true
       },
       createdAt: {
         allowNull: false,

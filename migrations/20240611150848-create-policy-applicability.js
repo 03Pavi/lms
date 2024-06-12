@@ -19,12 +19,12 @@ module.exports = {
       },
       createdAt: {
         allowNull: false,
-        fields: 'created_at',
+        field: 'created_at',
         type: Sequelize.DATE
       },
       updatedAt: {
         allowNull: false,
-        fields: 'updated_at',
+        field: 'updated_at',
         type: Sequelize.DATE
       }
     });

@@ -1,4 +1,5 @@
 'use strict';
+const {DataTypes} = require('sequelize');
 const { leave_type_enum, leave_unit_enum } = require('../models');
 
 /** @type {import('sequelize-cli').Migration} */
@@ -17,38 +18,44 @@ module.exports = {
         unique: true,
       },
       name: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(100),
         allowNull: false,
       },
-      orgainisation_id: {
+      organisation_id: {
         allowNull: false,
         type: Sequelize.UUID,
       },
-      leave_policy_id: {
+      code: {
+        allowNull: true,
+        type: Sequelize.STRING(50),
+      },
+      color: {
         allowNull: false,
-        type: Sequelize.UUID,
+        type: Sequelize.STRING(50),
       },
       type:{
         type: Sequelize.ENUM(leave_type_enum.get_available_leave_types()),
         defaultValue: leave_type_enum.leave_type.PAID,
-        allowNull: true,
+        allowNull: false,
       },
       unit:{
         type: Sequelize.ENUM(leave_unit_enum.get_available_leave_units()),
         defaultValue: leave_unit_enum.leave_unit.DAY,
-        allowNull: true,
+        allowNull: false,
       },
       is_active:{
         type: Sequelize.BOOLEAN,
         defaultValue: true,
         allowNull: true,
       },
-      created_at: {
+      createdAt: {
         allowNull: false,
+        field: "created_at",
         type: Sequelize.DATE
       },
-      updated_at: {
+      updatedAt: {
         allowNull: false,
+        field: "updated_at",
         type: Sequelize.DATE
       }
     });

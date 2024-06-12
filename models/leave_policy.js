@@ -21,9 +21,14 @@ module.exports = (sequelize, DataTypes) => {
 
     static associate(models) {
 
-      this.leave_policy_leave_association = leave_policy.hasOne(models.leave, {
+      this.leave_policy_leave_association = leave_policy.belongsTo(models.leave, {
         foreignKey: "leave_id",
         as: "leave", 
+      });
+
+      this.leave_policy_restriction_association = leave_policy.hasOne(models.restriction, {
+        foreignKey: "leave_policy_id",
+        as: "restriction",
       });
 
       this.leave_policy_applicability_association = leave_policy.belongsToMany(models.applicability, {
@@ -44,24 +49,12 @@ module.exports = (sequelize, DataTypes) => {
     },
     uuid: {
       type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
       allowNull: false,
       unique: true,
       validate: {
         notEmpty: {
           msg: 'UUID cannot be empty.',
-        },
-      },
-    },
-    name: {
-      type: DataTypes.STRING(100),
-      allowNull: false,
-      unique: true,
-      validate: {
-        notNull:{
-          msg: 'Name is required.'
-        },
-        notEmpty: {
-          msg: 'Name cannot be empty.',
         },
       },
     },

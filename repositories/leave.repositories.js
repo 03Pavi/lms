@@ -10,6 +10,7 @@ class leave_repository extends base_repository {
 
     async create_leave ({leave, transaction}) {
         let criteria = { organisation_id: leave.organisation_id }
+        console.log(leave);
         return this.find_create_find(criteria, leave, transaction)
     }
 }

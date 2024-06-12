@@ -24,16 +24,6 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true,
       primaryKey: true
     },
-    uuid: {
-      type: DataTypes.UUID,
-      allowNull: false,
-      unique: true,
-      validate: {
-        notEmpty: {
-          msg: 'UUID cannot be empty.',
-        },
-      },
-    },
     criteria: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -48,16 +38,22 @@ module.exports = (sequelize, DataTypes) => {
     },
     value: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
       validate: {
-        notNull:{
-          msg: 'Applicability value is required.'
-        },
         notEmpty: {
           msg: 'Applicability value cannot be empty.',
         },
       },
     },
+    user_id: {
+      type: DataTypes.UUID,
+      allowNull: true,
+      validate: {
+        notEmpty: {
+          msg: 'User id value cannot be empty.',
+        },
+      },
+    }
   }, {
     sequelize,
     modelName: 'applicability',

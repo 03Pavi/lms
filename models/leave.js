@@ -29,10 +29,18 @@ module.exports = (sequelize, DataTypes) => {
   class leave extends Model {
 
     static leave_leave_policy_association;
+    static leaves_restrictions_association;
 
     static associate(models) {
 
-      this.leave_leave_policy_association = leave.belongsTo(models.leave_policy, {
+      this.leaves_restrictions_association = leave.belongsToMany(models.restriction, {
+        through: models.clubbed_leave,
+        foreignKey: 'restriction_id',
+        otherKey:'restriction_id',
+        as: 'restrictions' // alias for the association
+      });
+
+      this.leave_leave_policy_association = leave.hasOne(models.leave_policy, {
         foreignKey: "leave_id",
         as: "leave", // alias for the association
       });
@@ -48,20 +56,12 @@ module.exports = (sequelize, DataTypes) => {
     },
     uuid: {
       type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
       allowNull: false,
       unique: true,
       validate: {
         notEmpty: {
           msg: 'UUID cannot be empty.',
-        },
-      },
-    },
-    organisation_id: {
-      type: DataTypes.UUID,
-      allowNull: false,
-      validate: {
-        notEmpty: {
-          msg: 'organisation id cannot be empty.',
         },
       },
     },
@@ -77,23 +77,32 @@ module.exports = (sequelize, DataTypes) => {
         },
       }
     },
-    code: {
-      type: DataTypes.STRING(100),
+    organisation_id: {
+      type: DataTypes.UUID,
       allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: 'organisation id cannot be empty.',
+        },
+      },
+    },
+    code: {
+      type: DataTypes.STRING(50),
+      allowNull: true,
       unique: true,
       validate: {
-        notNull: {
-          msg: 'Code is required.',
-        },
         notEmpty: {
           msg: 'Code cannot be empty.',
         },
       }
     },
     color: {
-      type: DataTypes.STRING(100),
-      allowNull: true,
+      type: DataTypes.STRING(50),
+      allowNull: false,
       validate: {
+        notNull: {
+          msg: 'Color is required.',
+        },
         notEmpty: {
           msg: 'Color cannot be empty.',
         },
@@ -102,10 +111,10 @@ module.exports = (sequelize, DataTypes) => {
     type: {
       type: DataTypes.ENUM(leave_type_enum.get_available_leave_types()),
       defaultValue: leave_type_enum.leave_type.PAID,
-      allowNull: true,
+      allowNull: false,
       validate: {
         isIn: {
-          args: [DataTypes.ENUM(leave_type_enum.get_available_leave_types())],
+          args: [leave_type_enum.get_available_leave_types()],
           msg: 'Invalid leave type value.',
         },
       },
@@ -113,10 +122,10 @@ module.exports = (sequelize, DataTypes) => {
     unit: {
       type:DataTypes.ENUM(leave_unit_enum.get_available_leave_units()),
       defaultValue: leave_unit_enum.leave_unit.DAY,
-      allowNull: true,
+      allowNull: false,
       validate: {
         isIn: {
-          args: [DataTypes.ENUM(leave_unit_enum.get_available_leave_units())],
+          args: [leave_unit_enum.get_available_leave_units()],
           msg: 'Invalid leave unit value.',
         },
       },

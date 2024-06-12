@@ -1,12 +1,7 @@
 const { connect_rabbit_mq } = require('../config/rabbit_mq_connection');
 const { check_db_connection } = require('../config/db_connection');
-const { academic_group_processor } = require('../processors');
-const { create_academic_group, create_academic_group_students } = academic_group_processor
 
-const processors = {
-  [process.env.RABBIT_GROUP_CONFIGURED_SIGNATURE]: create_academic_group,
-  [process.env.RABBIT_STUDENT_ASSIGNED_SIGNATURE]: create_academic_group_students
-};
+const processors = {};
 
 const consume_messages = async () => {
   try {
