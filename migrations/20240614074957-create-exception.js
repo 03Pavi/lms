@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('applicabilities', {
+    await queryInterface.createTable('exceptions', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -28,15 +28,15 @@ module.exports = {
         type: Sequelize.DATE
       }
     });
-    
-    await queryInterface.addConstraint('applicabilities', {
+
+    await queryInterface.addConstraint('exceptions', {
       type: 'unique',
-      name: 'unique_applicability',
+      name: 'unique_exception',
       fields: ['criteria', 'value']
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.removeConstraint('applicabilities', 'unique_applicability');
-    await queryInterface.dropTable('applicabilities');
+    await queryInterface.removeConstraint('exceptions', 'unique_exception');
+    await queryInterface.dropTable('exceptions');
   }
 };

@@ -3,21 +3,22 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class applicability extends Model {
-
-    static applicability_leave_policy_association;
-
+  class exception extends Model {
+    /**
+     * Helper method for defining associations.
+     * This method is not a part of Sequelize lifecycle.
+     * The `models/index` file will call this method automatically.
+     */
     static associate(models) {
-      this.applicability_leave_policy_association = applicability.belongsToMany(models.leave_policy, {
-        through: models.policy_applicability,
-        foreignKey: "applicability_id",
+      this.exception_leave_policy_association = exception.belongsToMany(models.leave_policy, {
+        through: models.policy_exception,
+        foreignKey: "exception_id",
         otherKey: "leave_policy_id",
         as: "leave_policies", // alias for the association
       });
     }
-
   }
-  applicability.init({
+  exception.init({
     id: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -29,10 +30,10 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         notNull:{
-          msg: 'Applicability criteria is required.'
+          msg: 'Exception criteria is required.'
         },
         notEmpty: {
-          msg: 'Applicability criteria cannot be empty.',
+          msg: 'Exception criteria cannot be empty.',
         },
       },
     },
@@ -41,7 +42,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         notEmpty: {
-          msg: 'Applicability value cannot be empty.',
+          msg: 'Exception value cannot be empty.',
         },
       },
     }
@@ -51,12 +52,12 @@ module.exports = (sequelize, DataTypes) => {
       {
         unique: true,
         fields: ['criteria', 'value'],
-        name: 'unique_applicability'
+        name: 'unique_exception'
       }
     ],
-    modelName: 'applicability',
+    modelName: 'exception',
     createdAt: 'created_at',
     updatedAt: 'updated_at',
   });
-  return { applicability };
+  return { exception };
 };

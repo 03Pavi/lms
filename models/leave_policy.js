@@ -38,6 +38,13 @@ module.exports = (sequelize, DataTypes) => {
         as: "applicabilities", // alias for the association
       });
 
+      this.leave_policy_exception_association = leave_policy.belongsToMany(models.exception, {
+        through: models.policy_exception,
+        foreignKey: "leave_policy_id",
+        otherKey: "exception_id",
+        as: "exceptions", // alias for the association
+      });
+
     }
   }
   

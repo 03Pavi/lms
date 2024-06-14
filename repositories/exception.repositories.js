@@ -1,25 +1,27 @@
-const { applicability } = require('../models');
+const { exception } = require('../models');
 
 const { sequelize } = require("../config/db_connection");
 const { base_repository } = require('./base.repositories');
 
-class applicability_repository extends base_repository {
+class exception_repository extends base_repository {
     constructor(payload) {
         super(payload);
     }
 
-    async create_leave_applicabilities ({applicabilities, transaction}) {
+    async create_leave_exceptions ({exceptions, transaction}) {
         const options = { 
             updateOnDuplicate : ['criteria', 'value'],
             transaction 
         };
-        return this.bulk_create(applicabilities, options);
+
+        console.log(exceptions)
+        return this.bulk_create(exceptions, options);
     }
 }
 
 module.exports = {
-    applicability_repository_obj: new applicability_repository({
+    exception_repository_obj: new exception_repository({
         db_connection: sequelize,
-        model: applicability,
+        model: exception,
     }),
 };

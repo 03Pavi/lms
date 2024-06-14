@@ -2,19 +2,19 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('applicabilities', {
+    await queryInterface.createTable('policy_exceptions', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      criteria: {
-        type: Sequelize.STRING(50),
+      exception_id: {
+        type: Sequelize.INTEGER,
         allowNull: false
       },
-      value: {
-        type: Sequelize.STRING(50),
+      leave_policy_id: {
+        type: Sequelize.INTEGER,
         allowNull: false
       },
       createdAt: {
@@ -28,15 +28,8 @@ module.exports = {
         type: Sequelize.DATE
       }
     });
-    
-    await queryInterface.addConstraint('applicabilities', {
-      type: 'unique',
-      name: 'unique_applicability',
-      fields: ['criteria', 'value']
-    });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.removeConstraint('applicabilities', 'unique_applicability');
-    await queryInterface.dropTable('applicabilities');
+    await queryInterface.dropTable('policy_exceptions');
   }
 };
