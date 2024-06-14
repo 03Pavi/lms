@@ -5,10 +5,10 @@ module.exports = (sequelize, DataTypes) => {
 
   class exceed_limit_enum {
     static exceed_limit = {
-        UNTIL_YEAR_END: 'until year end',
-        WITHOUT_LIMIT: 'without limit',
+        UNTIL_YEAR_END: 'until_year_end',
+        WITHOUT_LIMIT: 'without_limit',
     };
-    static get_available_exceeded_limits() {
+    static get_available_exceed_limits() {
         return Object.values(exceed_limit_enum.exceed_limit);
     }
   }
@@ -20,8 +20,10 @@ module.exports = (sequelize, DataTypes) => {
 
     static associate(models) {
 
-      this.restriction_leaves_association = restriction.hasMany(models.leave, {
+      this.restriction_leaves_association = restriction.belongsToMany(models.leave, {
+        through: models.clubbed_leave,
         foreignKey: "restriction_id",
+        anotherKey: "leave_id",
         as: "clubbed_leaves",
       });
 
@@ -68,20 +70,15 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       allowNull: true,
       defaultValue: false,
-      validate: {
-        notNull: {
-          msg: 'allow exceeded check id is required.'
-        },
-      }
     },
     exceed_limit: {
-      type: DataTypes.ENUM(exceed_limit_enum.get_available_exceeded_limits()),
-      defaultValue: exceed_limit_enum.exceeded_limit.WITHOUT_LIMIT,
+      type: DataTypes.ENUM(exceed_limit_enum.get_available_exceed_limits()),
+      defaultValue: exceed_limit_enum.exceed_limit.WITHOUT_LIMIT,
       allowNull: true,
       validate: {
           isIn: {
-              args: [exceed_limit_enum.get_available_exceeded_limits],
-              msg: 'Invalid exceeded_limit value.',
+              args: [exceed_limit_enum.get_available_exceed_limits()],
+              msg: 'Invalid exceed_limit value.',
           },
       },
     },
@@ -89,21 +86,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       allowNull: true,
       defaultValue: false,
-      validate: {
-          notNull: {
-            msg: 'excess as lop id is required.'
-          },
-      }
     },
     sandwich_leave: {
       type: DataTypes.BOOLEAN,
       allowNull: true,
       defaultValue: false,
-      validate: {
-          notNull: {
-            msg: 'excess as lop id is required.'
-          },
-      }
     },
     sandwich_weekend: {
       type: DataTypes.INTEGER,

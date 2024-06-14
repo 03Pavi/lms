@@ -2,15 +2,20 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('record_restrictions', {
+    await queryInterface.createTable('clubbed_leaves', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      period_type: {
-        type: Sequelize.STRING
+      restriction_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      leave_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,
@@ -25,6 +30,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('record_restrictions');
+    await queryInterface.dropTable('clubbed_leaves');
   }
 };

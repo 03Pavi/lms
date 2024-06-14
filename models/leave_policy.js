@@ -40,6 +40,7 @@ module.exports = (sequelize, DataTypes) => {
 
     }
   }
+  
   leave_policy.init({
     id: {
       type: DataTypes.INTEGER,

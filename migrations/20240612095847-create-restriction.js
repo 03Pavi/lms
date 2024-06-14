@@ -1,5 +1,5 @@
 'use strict';
-const {exceeded_limit_enum} = require('../models');
+const {exceed_limit_enum} = require('../models');
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -30,26 +30,26 @@ module.exports = {
         defaultValue: false,
       },
       exceed_limit: {
-        type: Sequelize.ENUM(exceeded_limit_enum.get_available_exceeded_limits()),
-        defaultValue: exceeded_limit_enum.exceeded_limit.WITHOUT_LIMIT,
+        type: Sequelize.ENUM(exceed_limit_enum.get_available_exceed_limits()),
+        defaultValue: exceed_limit_enum.exceed_limit.WITHOUT_LIMIT,
         allowNull: true,
       },
       excess_as_lop: {
-        type: DataTypes.BOOLEAN,
+        type: Sequelize.BOOLEAN,
         allowNull: true,
         defaultValue: false,
       },
       sandwich_leave: {
-        type: DataTypes.BOOLEAN,
+        type: Sequelize.BOOLEAN,
         allowNull: true,
         defaultValue: false,
       },
       sandwich_weekend: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: true,
       },
       sandwich_holiday: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: true,
       },
       createdAt: {

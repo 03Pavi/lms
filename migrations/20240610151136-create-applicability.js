@@ -32,8 +32,16 @@ module.exports = {
         type: Sequelize.DATE
       }
     });
+
+    // Add the unique constraint
+    await queryInterface.addConstraint('applicabilities', {
+      fields: ['criteria', 'value', 'user_id'],
+      type: 'unique',
+      name: 'unique_applicability'
+    });
   },
   async down(queryInterface, Sequelize) {
+    await queryInterface.removeConstraint('applicabilities', 'unique_applicability');
     await queryInterface.dropTable('applicabilities');
   }
 };

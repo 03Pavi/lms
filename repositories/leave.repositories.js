@@ -9,9 +9,19 @@ class leave_repository extends base_repository {
     }
 
     async create_leave ({leave, transaction}) {
-        let criteria = { organisation_id: leave.organisation_id }
-        console.log(leave);
-        return this.find_create_find(criteria, leave, transaction)
+        let criteria = { organisation_id: leave.organisation_id };
+        return this.find_create_find({criteria, payload:leave, transaction})
+    }
+
+    async get_leaves_by_uuid({clubbed_leaves, transaction}) {
+        
+        let criteria = {
+            uuid: clubbed_leaves
+        };
+
+        let attributes = ['id']
+
+        return this.find_all({criteria, attributes, transaction});
     }
 }
 

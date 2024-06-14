@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true
     },
     criteria: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(50),
       allowNull: false,
       validate: {
         notNull:{
@@ -37,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     value: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(50),
       allowNull: true,
       validate: {
         notEmpty: {
@@ -56,6 +56,13 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     sequelize,
+    indexes: [
+      {
+        unique: true,
+        fields: ['criteria', 'value', 'user_id'],
+        name: 'unique_applicability'
+      }
+    ],
     modelName: 'applicability',
     createdAt: 'created_at',
     updatedAt: 'updated_at',

@@ -10,7 +10,7 @@ class leave_policy_repository extends base_repository {
 
     async create_leave_policy ({leave_policy, transaction}) {
         let criteria = { leave_id: leave_policy.leave_id }
-        return this.find_create_find(criteria, leave_policy, transaction)
+        return this.find_create_find({criteria, payload:leave_policy, transaction})
     }
 }
 

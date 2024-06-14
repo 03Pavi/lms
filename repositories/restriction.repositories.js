@@ -10,7 +10,7 @@ class restriction_repository extends base_repository {
 
     async create_leave_restriction ({restriction, transaction}) {
         let criteria = { leave_policy_id: restriction.leave_policy_id }
-        return this.find_create_find(criteria, restriction, transaction)
+        return this.find_create_find({criteria, payload:restriction, transaction})
     }
 }
 

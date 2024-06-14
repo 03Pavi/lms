@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
         JOB_TENURE: 'job tenure',
     };
 
-    static get_available_period_types() {
+    static get_available_periods() {
         return Object.values(period_type_enum.period_types);
     }
   }
@@ -88,5 +88,5 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'record_restriction',
   });
-  return record_restriction;
+  return { record_restriction };
 };

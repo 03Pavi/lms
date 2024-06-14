@@ -33,16 +33,16 @@ module.exports = (sequelize, DataTypes) => {
 
     static associate(models) {
 
-      this.leaves_restrictions_association = leave.belongsToMany(models.restriction, {
-        through: models.clubbed_leave,
-        foreignKey: 'restriction_id',
-        otherKey:'restriction_id',
-        as: 'restrictions' // alias for the association
-      });
-
       this.leave_leave_policy_association = leave.hasOne(models.leave_policy, {
         foreignKey: "leave_id",
         as: "leave", // alias for the association
+      });
+
+      this.leave_restrictions_association = leave.belongsToMany(models.restriction, {
+        through: models.clubbed_leave,
+        foreignKey: "leave_id",
+        anotherKey: "restriction_id",
+        as: "restrictions",
       });
 
     }
