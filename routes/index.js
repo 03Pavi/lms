@@ -5,7 +5,6 @@ router.get("/", (req, res, next) => {
     status: "This is the Attendance Control App",
   });
 });
-
 router.use('/organisation', require('./organisation.routes'));
 
 module.exports = router;

@@ -4,7 +4,6 @@ const { leave_repository_obj } = require("../repositories/leave.repositories");
 exports.get_leaves_by_orgainisation_id = async (payload) => {
 
     const {uuid:organisation_id }= payload.params;
-// console.log("uuid--------",uuid)
     let { page = '1', limit = '10', search_value = '', sort_column = '', sort_order = 'desc' } = payload.query;
 
     try {

@@ -3,10 +3,10 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  
-  class leave_type_enum  {
+
+  class leave_type_enum {
     static leave_type = {
-      PAID : 'paid',
+      PAID: 'paid',
       UNPAID: 'unpaid',
     }
     static get_available_leave_types() {
@@ -15,9 +15,9 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
 
-  class leave_unit_enum  {
+  class leave_unit_enum {
     static leave_unit = {
-      HOUR : 'hour',
+      HOUR: 'hour',
       DAY: 'day',
     }
     static get_available_leave_units() {
@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
 
     static leave_leave_policy_association;
     static leaves_restrictions_association;
-
+    static leave_leave_request_association;
     static associate(models) {
 
       this.leave_leave_policy_association = leave.hasOne(models.leave_policy, {
@@ -45,6 +45,10 @@ module.exports = (sequelize, DataTypes) => {
         as: "restrictions",
       });
 
+      this.leave_leave_request_association = leave.hasMany(models.leave_request, {
+        foreignKey: "leave_id",
+        as: "leave_request",
+      });
     }
   }
   leave.init({
@@ -120,7 +124,7 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     unit: {
-      type:DataTypes.ENUM(leave_unit_enum.get_available_leave_units()),
+      type: DataTypes.ENUM(leave_unit_enum.get_available_leave_units()),
       defaultValue: leave_unit_enum.leave_unit.DAY,
       allowNull: false,
       validate: {
@@ -131,7 +135,7 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     is_active: {
-      type:DataTypes.BOOLEAN,
+      type: DataTypes.BOOLEAN,
       defaultValue: true,
       allowNull: true,
     },
