@@ -11,7 +11,7 @@ const {
 exports.create_leave_policy = async (payload) => {
 
     let { leave , leave_policy , applicabilities = [], exceptions = [],  restriction  } = create_leave_schema.parse(payload.body);
-    let { clubbed_leaves } = restriction;
+    let { clubbed_leaves=[] } = restriction;
     const transaction = await transaction_repository_obj.start_transaction();
 
     try {     
