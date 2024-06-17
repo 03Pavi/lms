@@ -1,6 +1,5 @@
 'use strict';
-const { DataTypes } = require('sequelize');
-const {exceed_limit_enum} = require('../models');
+const {exceed_limit_enum, period_type_enum} = require('../models');
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -52,6 +51,58 @@ module.exports = {
       sandwich_holiday: {
         type: Sequelize.INTEGER,
         allowNull: true,
+      },
+      allow_past_requests: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
+      },
+      past_request_limit: {
+          type: Sequelize.INTEGER,
+          allowNull: true
+      },
+      allow_future_requests: {
+          type: Sequelize.BOOLEAN,
+          allowNull: false,
+          defaultValue: true
+      },
+      next_days_limit: {
+          type: Sequelize.INTEGER,
+          allowNull: true
+      },
+      advance_days_limit: {
+          type: Sequelize.INTEGER,
+          allowNull: true
+      },
+      admin_only: {
+          type: Sequelize.BOOLEAN,
+          allowNull: false,
+          defaultValue: false
+      },
+      min_leave_per_request: {
+          type: Sequelize.INTEGER,
+          allowNull: true
+      },
+      max_leave_per_request: {
+          type: Sequelize.INTEGER,
+          allowNull: true
+      },
+      max_consecutive_days: {
+          type: Sequelize.INTEGER,
+          allowNull: true
+      },
+      min_gap_between_requests: {
+          type: Sequelize.INTEGER,
+          allowNull: true
+      },
+      max_requests_in_period: {
+          type: Sequelize.INTEGER,
+          allowNull: true
+      },
+      period_type: {
+          type: Sequelize.ENUM(period_type_enum.get_available_periods()),
+          defaultValue: period_type_enum.period_types.WEEK,
+          allowNull: false,
       },
       createdAt: {
         allowNull: false,
