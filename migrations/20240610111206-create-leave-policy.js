@@ -40,16 +40,8 @@ module.exports = {
         type: Sequelize.ENUM(leave_period_enum.get_available_periods()),
         allowNull: true,
       },
-      carry: {
-        type: Sequelize.BOOLEAN,
-        allowNull: true,
-      },
       carry_leaves: {
         type: Sequelize.INTEGER,
-        allowNull: true,
-      },
-      encash: {
-        type: Sequelize.BOOLEAN,
         allowNull: true,
       },
       encash_leaves: {

@@ -106,10 +106,6 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
     },
-    carry: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false
-    },
     carry_leaves: {
       type: DataTypes.INTEGER,
       allowNull: true,
@@ -118,10 +114,6 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'Invalid carry leaves value.',
         },
       }
-    },
-    encash: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false
     },
     encash_leaves: {
       type: DataTypes.INTEGER,

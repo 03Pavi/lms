@@ -52,6 +52,26 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: true,
       },
+      full_day:{
+        type: Sequelize.BOOLEAN,
+        allowNull: true,
+        defaultValue: false
+      },
+      half_day:{
+        type: Sequelize.BOOLEAN,
+        allowNull: true,
+        defaultValue: false
+      },
+      quarter_day:{
+        type: Sequelize.BOOLEAN,
+        allowNull: true,
+        defaultValue: false
+      },
+      hourly:{
+        type: Sequelize.BOOLEAN,
+        allowNull: true,
+        defaultValue: false
+      },
       allow_past_requests: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
