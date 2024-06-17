@@ -75,7 +75,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     exceed_limit: {
-      type: DataTypes.ENUM(exceed_limit_enum.get_available_exceeded_limits()),
+      type: DataTypes.ENUM(exceed_limit_enum.get_available_exceed_limits()),
       defaultValue: exceed_limit_enum.exceed_limit.WITHOUT_LIMIT,
       allowNull: false,
       validate: {
