@@ -33,6 +33,13 @@ module.exports = (sequelize, DataTypes) => {
 
     static associate(models) {
 
+      this.leaves_restrictions_association = leave.belongsToMany(models.restriction, {
+        through: models.leave_restriction,
+        foreignKey: 'restriction_id',
+        otherKey:'restriction_id',
+        as: 'restrictions' // alias for the association
+      });
+
       this.leave_leave_policy_association = leave.hasOne(models.leave_policy, {
         foreignKey: "leave_id",
         as: "leave", // alias for the association
@@ -78,7 +85,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     organisation_id: {
-      type: DataTypes.UUID,
+      type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
         notEmpty: {

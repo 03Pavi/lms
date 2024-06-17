@@ -111,7 +111,7 @@ exports.base_repository = class base_repository {
    * @param {object} transaction - Transaction object to run query under.
    * @param {object|array} replacements - Replacements for query parameters to prevent SQL injection.
    */
-  async find_all({ criteria, include = [], paranoid = true, attributes, order, limit, transaction, replacements }) {
+  async find_all({criteria, include = [], paranoid = true, attributes, order, limit, transaction, replacements}) {
 
     const options = {
       where: criteria,

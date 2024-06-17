@@ -23,7 +23,7 @@ module.exports = {
       },
       organisation_id: {
         allowNull: false,
-        type: Sequelize.UUID,
+        type: Sequelize.INTEGER,
       },
       code: {
         allowNull: true,

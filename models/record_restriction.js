@@ -74,12 +74,12 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true
     },
     period_type: {
-        type: DataTypes.ENUM(period_type_enum.get_available_periods()),
+        type: DataTypes.ENUM(period_type_enum.get_available_period_types()),
         defaultValue: period_type_enum.period_types.WEEK,
         allowNull: false,
         validate: {
             isIn: {
-                args: [period_type_enum.get_available_periods()],
+                args: [period_type_enum.get_available_period_types()],
                 msg: 'Invalid period type.',
             },
         },

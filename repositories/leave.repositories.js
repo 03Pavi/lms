@@ -28,13 +28,14 @@ class leave_repository extends base_repository {
 
     async get_leaves_by_organisation_id({organisation_id,limit,transaction}) {
         let criteria = {
-            organisation_id: organisation_id
+            // organisation_id: organisation_id
         }
         let include = [];
         let attributes = {};
         let order = [
             ['id', 'DESC']
         ];
+        console.log(criteria,"criteriacriteria")
         return this.find_all({criteria, include, attributes, order, limit, transaction});
     }
 

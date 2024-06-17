@@ -1,4 +1,5 @@
 'use strict';
+const { DataTypes } = require('sequelize');
 const {exceed_limit_enum} = require('../models');
 
 /** @type {import('sequelize-cli').Migration} */
@@ -30,7 +31,7 @@ module.exports = {
         defaultValue: false,
       },
       exceed_limit: {
-        type: Sequelize.ENUM(exceed_limit_enum.get_available_exceed_limits()),
+        type: Sequelize.ENUM(exceed_limit_enum.get_available_exceeded_limits()),
         defaultValue: exceed_limit_enum.exceed_limit.WITHOUT_LIMIT,
         allowNull: true,
       },

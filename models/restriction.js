@@ -70,11 +70,14 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       allowNull: true,
       defaultValue: false,
+      validate: {
+       
+      }
     },
     exceed_limit: {
-      type: DataTypes.ENUM(exceed_limit_enum.get_available_exceed_limits()),
+      type: DataTypes.ENUM(exceed_limit_enum.get_available_exceeded_limits()),
       defaultValue: exceed_limit_enum.exceed_limit.WITHOUT_LIMIT,
-      allowNull: true,
+      allowNull: false,
       validate: {
           isIn: {
               args: [exceed_limit_enum.get_available_exceed_limits()],
