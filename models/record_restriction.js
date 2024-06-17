@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
         JOB_TENURE: 'job tenure',
     };
 
-    static get_available_periods() {
+    static get_available_period_types() {
         return Object.values(period_type_enum.period_types);
     }
   }
