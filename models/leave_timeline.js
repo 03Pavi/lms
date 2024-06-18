@@ -30,39 +30,25 @@ module.exports = (sequelize, DataTypes) => {
                 },
             },
         },
-        leave_id: {
-            type: DataTypes.INTEGER,
+        leave_request_id: {
+            type: DataTypes.STRING(36),
             allowNull: false,
             references: {
                 model: 'leaves',
                 key: 'id'
             }
         },
-        user_id: {
-            type: DataTypes.INTEGER,
+        action: {
+            type: DataTypes.STRING(255),
             allowNull: false,
-            references: {
-                model: 'users',
-                key: 'id'
-            }
+            unique: true,
         },
-        start_date: {
-            type: DataTypes.DATE,
-            allowNull: false,
-            validate: {
-                isDate: {
-                    msg: 'Invalid start date value.'
-                }
-            }
+        updated_by: {
+            type: DataTypes.STRING(100),
         },
-        end_date: {
+        updated_at: {
             type: DataTypes.DATE,
-            allowNull: false,
-            validate: {
-                isDate: {
-                    msg: 'Invalid start date value.'
-                }
-            }
+            unique: true,
         },
     }, {
         sequelize,

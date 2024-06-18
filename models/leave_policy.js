@@ -4,7 +4,7 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
 
-  class leave_period_enum  {
+  class leave_period_enum {
     static leave_periods = {
       YEARLY: 'yearly',
       MONTHLY: 'monthly',
@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
 
       this.leave_policy_leave_association = leave_policy.belongsTo(models.leave, {
         foreignKey: "leave_id",
-        as: "leave", 
+        as: "leave",
       });
 
       this.leave_policy_restriction_association = leave_policy.hasOne(models.restriction, {
@@ -47,7 +47,7 @@ module.exports = (sequelize, DataTypes) => {
 
     }
   }
-  
+
   leave_policy.init({
     id: {
       type: DataTypes.INTEGER,
@@ -154,5 +154,5 @@ module.exports = (sequelize, DataTypes) => {
     createdAt: 'created_at',
     updatedAt: 'updated_at',
   });
-  return {leave_policy, leave_period_enum};
+  return { leave_policy, leave_period_enum };
 };

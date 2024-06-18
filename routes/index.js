@@ -6,5 +6,6 @@ router.get("/", (req, res, next) => {
   });
 });
 router.use('/organisation', require('./organisation.routes'));
+router.use('/leaves', require('./leaves.routes'));
 
 module.exports = router;

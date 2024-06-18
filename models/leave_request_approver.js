@@ -31,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
             },
         },
         leave_request_id: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING(36),
             allowNull: false,
             references: {
                 model: 'leaves',
@@ -39,12 +39,9 @@ module.exports = (sequelize, DataTypes) => {
             }
         },
         approval_by: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING(225),
             allowNull: false,
-            references: {
-                model: 'users',
-                key: 'id'
-            }
+            unique: true,
         },
         stage: {
             type: DataTypes.STRING(100),
@@ -55,15 +52,11 @@ module.exports = (sequelize, DataTypes) => {
                 }
             }
         },
-        end_date: {
-            type: DataTypes.DATE,
-            allowNull: false,
-            validate: {
-                isDate: {
-                    msg: 'Invalid start date value.'
-                }
-            }
-        },
+        status: {
+            type: DataTypes.STRING(100),
+            allowNull: true,
+            unique: true,
+        }
     }, {
         sequelize,
         modelName: 'leave_request_approver',

@@ -6,13 +6,11 @@ module.exports = (sequelize, DataTypes) => {
 
     class status_enum {
         static status_enums = {
-            WEEK: 'week',
-            MONTH: 'month',
-            YEAR: 'year',
-            ACCRUAL_PERIOD: 'accrual period',
-            JOB_TENURE: 'job tenure',
+            PENDING: "pending",
+            APPROVED: "approved",
+            CANCELLED: "cancelled",
+            RECOMMENDED: "recommended",
         };
-
         static get_available_enums() {
             return Object.values(status_enum.status_enums);
         }
@@ -90,20 +88,22 @@ module.exports = (sequelize, DataTypes) => {
                 }
             }
         },
-        status: {
-            type: DataTypes.ENUM(status_enum.get_available_enums()),
-            allowNull: false,
-            validate: {
-                notEmpty: {
-                    msg: 'Status cannot be empty.'
-                }
-            }
-        }
+        // status: {
+        //     type: DataTypes.ENUM(status_enum.get_available_enums()),
+        //     defaultValue: status_enum.status_enums.PENDING,
+        //     allowNull: false,
+        //     validate: {
+        //         isIn: {
+        //             args: [status_enum.get_available_enums()],
+        //             msg: 'Invalid status value.',
+        //         }
+        //     }
+        // }
     }, {
         sequelize,
         modelName: 'leave_request',
         createdAt: 'created_at',
         updatedAt: 'updated_at',
     });
-    return { leave_request };
+    return { leave_request, status_enum };
 };
