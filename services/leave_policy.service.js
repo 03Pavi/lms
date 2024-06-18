@@ -49,10 +49,8 @@ exports.create_leave_policy = async (payload) => {
     }
 }
 exports.get_leave_data = async (payload) => {
-
     let { uuid } = payload.params
     const transaction = await transaction_repository_obj.start_transaction();
-
     try {
 
         const { leave_policy } = await leave_repository_obj.get_leave_data_by_leave_uuid({ uuid, transaction });

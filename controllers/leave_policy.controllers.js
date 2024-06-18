@@ -10,7 +10,7 @@ exports.create_leave_policy = async (req, res) => {
         handle_error(res, error);
     }
 }
-exports.get_leave_policy_by_leave_id = async (req, res) => {
+exports.get_leave_data = async (req, res) => {
     try {
         const response = await leave_policy_service.get_leave_data(req);
         return res.status(200).send(response);
