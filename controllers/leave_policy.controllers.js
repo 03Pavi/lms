@@ -7,15 +7,16 @@ exports.create_leave_policy = async (req, res) => {
         return res.status(201).send(response);
     } catch (error) {
         console.log("Error while creating leave policy : ", error);
-        handle_error(res,error);
+        handle_error(res, error);
     }
 }
-exports.get_leave_policy = async (req, res) => {
+exports.get_leave_policy_by_leave_id = async (req, res) => {
+    console.log("hello")
     try {
-        const response = await leave_policy_service.get_leave_policy(req);
-        return res.status(201).send(response);
+        const response = await leave_policy_service.get_leave_policy_by_leave_id(req);
+        return res.status(200).send(response);
     } catch (error) {
         console.log("Error while creating leave policy : ", error);
-        handle_error(res,error);
+        handle_error(res, error);
     }
 }

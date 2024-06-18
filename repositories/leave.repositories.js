@@ -10,7 +10,7 @@ class leave_repository extends base_repository {
     }
 
     async create_leave({ leave, transaction }) {
-        let criteria = { organisation_id: leave.organisation_id };
+        let criteria = { organisation_id: leave.organisation_id, name: leave.name };
         return this.find_create_find({ criteria, payload: leave, transaction })
     }
 
@@ -25,8 +25,22 @@ class leave_repository extends base_repository {
         return this.find_all({ criteria, attributes, transaction });
     }
 
+    async get_leave_policy({ leave_uuid, transaction }) {
 
-    async get_leaves_by_organisation_id({ organisation_id, limit, transaction }) {
+        let criteria = {
+            uuid: uuid
+        };
+
+        let attributes = ['id']
+
+        return this.find_all({ criteria, attributes, transaction });
+    }
+
+
+
+
+    async get_leaves_by_organisation_id({ payload, transaction }) {
+        const { organisation_id, limit, offset, search_value, sort_column, sort_order, sort_key } = payload
         let criteria = {
             organisation_id: organisation_id
         }
@@ -35,10 +49,8 @@ class leave_repository extends base_repository {
         let order = [
             ['id', 'DESC']
         ];
-        console.log(criteria, "criteriacriteria")
         return this.find_all({ criteria, include, attributes, order, limit, transaction });
     }
-
 }
 
 module.exports = {
