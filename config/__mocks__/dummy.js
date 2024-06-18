@@ -1,4 +1,4 @@
-export const dummyData = [
+const dummyData = [
     {
         "leave": {
             "uuid": "6d8445ca-a89f-441a-a2d9-1e16c8acc649",
@@ -119,18 +119,40 @@ export const dummyData = [
             "created_at": "2024-06-18T00:00:00.000Z",
             "updated_at": "2024-06-18T00:00:00.000Z"
         },
-        "applicabilities": {
-            "criteria": "Role",
-            "value": "Australia",
-            "created_at": "2024-02-18T01:27:40Z",
-            "updated_at": "2023-12-08T11:09:39Z"
-        },
-        "exceptions": {
-            "criteria": "tenure",
-            "value": "female",
-            "created_at": "2024-04-19T06:39:01Z",
-            "updated_at": "2023-12-09T15:38:38Z"
-        },
+        "applicabilities": [
+            {
+                "criteria": "Location",
+                "value": "India",
+                "created_at": "2024-06-18T00:00:00.000Z",
+                "updated_at": "2024-06-18T00:00:00.000Z"
+            },
+            {
+                "criteria": "Department",
+                "value": "Engineering",
+                "created_at": "2024-06-18T00:00:00.000Z",
+                "updated_at": "2024-06-18T00:00:00.000Z"
+            }
+        ],
+        "exceptions": [
+            {
+                "criteria": "genders",
+                "value": "male",
+                "created_at": "2024-06-18T00:00:00.000Z",
+                "updated_at": "2024-06-18T00:00:00.000Z"
+            },
+            {
+                "criteria": "genders",
+                "value": "female",
+                "created_at": "2024-06-18T00:00:00.000Z",
+                "updated_at": "2024-06-18T00:00:00.000Z"
+            },
+            {
+                "criteria": "genders",
+                "value": "other",
+                "created_at": "2024-06-18T00:00:00.000Z",
+                "updated_at": "2024-06-18T00:00:00.000Z"
+            }
+        ],
         "restriction": {
             "uuid": "123e4567-e89b-12d3-a456-425614175000",
             "leave_policy_id": 2,
@@ -164,3 +186,4 @@ export const dummyData = [
         }
     }
 ]
+module.exports = { dummyData }
