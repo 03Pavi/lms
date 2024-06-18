@@ -6,7 +6,6 @@ module.exports = (sequelize, DataTypes) => {
   class policy_applicability extends Model {
 
     static associate(models) {
-      
     }
   }
   policy_applicability.init({
@@ -19,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     leave_policy_id: {
-      type: DataTypes.INTEGER, 
+      type: DataTypes.INTEGER,
       allowNull: false,
       references: {
         model: 'leave_policies',

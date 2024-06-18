@@ -1,4 +1,10 @@
-const { leave } = require('../models');
+const { 
+    leave,
+    leave_policy: leave_policy_model,
+    applicability: applicability_model,
+    restriction: restriction_model,
+    exception: exception_model
+} = require('../models');
 
 const { sequelize } = require("../config/db_connection");
 const { base_repository } = require('./base.repositories');
@@ -36,7 +42,45 @@ class leave_repository extends base_repository {
         return this.find_all({ criteria, attributes, transaction });
     }
 
+    async get_leave_data_by_leave_uuid({ uuid, transaction }) {
+        let criteria = {
+            uuid: uuid
+        }
 
+        let include = [
+            {
+                model: leave_policy_model,
+                as: 'leave_policy',
+                attributes: {
+                    exclude: ['id']
+                },
+                include: [
+                    {
+                        model: applicability_model,
+                        as: 'applicabilities',
+                        attributes: {
+                            exclude: ['id', 'policy_applicability']
+                        }
+                    },
+                    {
+                        model: restriction_model,
+                        as: 'restriction',
+                        attributes: {
+                            exclude: ['id']
+                        }
+                    },
+                    {
+                        model: exception_model,
+                        as: 'exceptions'
+                    }
+                ]
+            }
+        ];
+
+        let attributes = []
+
+        return await this.find_one({ criteria, include, attributes, transaction });
+    }
 
 
     async get_leaves_by_organisation_id({ payload, transaction }) {

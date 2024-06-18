@@ -48,16 +48,17 @@ exports.create_leave_policy = async (payload) => {
         throw error;
     }
 }
-exports.get_leave_policy_by_leave_id = async (payload) => {
+exports.get_leave_data = async (payload) => {
+
     let { uuid } = payload.params
     const transaction = await transaction_repository_obj.start_transaction();
+
     try {
-        const get_leave_policy = await leave_policy_repository_obj.get_leave_policy_by_leave_id({ uuid, transaction });
-        const leave_policy_id = get_leave_policy.id;
-        const policy_applicability = await applicability_repository_obj.get_leave_applicability_by_leave_policy_id({ payload: { leave_policy_id }, transaction });
+
+        const { leave_policy } = await leave_repository_obj.get_leave_data_by_leave_uuid({ uuid, transaction });
         await transaction_repository_obj.commit_transaction(transaction);
         return {
-            leave_policy: get_leave_policy
+            leave_policy: leave_policy,
         };
     } catch (error) {
         await transaction_repository_obj.rollback_transaction(transaction);

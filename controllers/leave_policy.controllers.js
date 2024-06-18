@@ -11,9 +11,8 @@ exports.create_leave_policy = async (req, res) => {
     }
 }
 exports.get_leave_policy_by_leave_id = async (req, res) => {
-    console.log("hello")
     try {
-        const response = await leave_policy_service.get_leave_policy_by_leave_id(req);
+        const response = await leave_policy_service.get_leave_data(req);
         return res.status(200).send(response);
     } catch (error) {
         console.log("Error while creating leave policy : ", error);

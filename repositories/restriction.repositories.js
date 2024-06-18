@@ -8,9 +8,19 @@ class restriction_repository extends base_repository {
         super(payload);
     }
 
-    async create_leave_restriction ({restriction, transaction}) {
+    async create_leave_restriction({ restriction, transaction }) {
         let criteria = { leave_policy_id: restriction.leave_policy_id }
-        return this.find_create_find({criteria, payload:restriction, transaction})
+        return this.find_create_find({ criteria, payload: restriction, transaction })
+    }
+
+    async get_restriction_by_leave_policy_id({ payload, transaction }) {
+        const { leave_policy_id } = payload
+        let criteria = { leave_policy_id: leave_policy_id };
+        let attributes = {
+            exclude: ["id", "created_at", "updated_at"]
+        }
+        let include = []
+        return this.find_one(criteria, include, true, attributes, transaction)
     }
 }
 

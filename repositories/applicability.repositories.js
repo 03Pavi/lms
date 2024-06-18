@@ -19,10 +19,11 @@ class applicability_repository extends base_repository {
         const { uuid } = payload
         let criteria = { leave_policy_id: uuid };
         let attributes = {
-            exclude: ["id", "created_at", "updated_at", "leave_id"]
+            include: ["applicability_id"],
+            exclude: ["id", "created_at", "updated_at"]
         }
         let include = []
-        return this.find_one(criteria, include, true, attributes, transaction)
+        return this.find_all(criteria, include, true, attributes, transaction)
     }
 }
 

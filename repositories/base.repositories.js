@@ -87,7 +87,7 @@ exports.base_repository = class base_repository {
    * @param {boolean} paranoid - If you really want to let the query see the soft-deleted records, you can pass the paranoid: false option to the query method
    * @param {object} attributes - To exclude or include column in records.
    */
-  async find_one(criteria, include = [], paranoid = true, attributes, transaction) {
+  async find_one({criteria, include = [], paranoid = true, attributes, transaction}) {
 
     const options = {
       where: criteria,
